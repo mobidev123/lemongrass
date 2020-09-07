@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>3A484A5B-DE44-4343-B82B-11BE94C15135</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>3A484A5B-DE44-4343-B82B-11BE94C15135.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>smartbrush project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>smartbrush</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building workspace smartbrush with scheme smartbrush and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>610263734.29596603</real>
+			<key>timeStoppedRecording</key>
+			<real>610263735.29437804</real>
+			<key>title</key>
+			<string>Building workspace smartbrush with scheme smartbrush and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>3A484A5B-DE44-4343-B82B-11BE94C15135</string>
+		</dict>
+	</dict>
+</dict>
+</plist>
