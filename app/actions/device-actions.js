@@ -58,6 +58,7 @@ export const addDevice = function (device) {
       },
     })
       .then(response => {
+        console.log('response', response);
         // prettyPrint('added device in the backend', response);
 
         dispatch(fetchDevices());

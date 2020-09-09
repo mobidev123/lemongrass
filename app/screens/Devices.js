@@ -3,7 +3,6 @@ import { StyleSheet, View, ScrollView, Dimensions, Alert, addons } from 'react-n
 import { Defs, LinearGradient, Stop, parse } from 'react-native-svg';
 import { AreaChart } from 'react-native-svg-charts';
 import * as shape from 'd3-shape';
-import { LineChart } from 'react-native-chart-kit';
 import { FAB } from 'react-native-paper';
 import { Button, Block, Icon, Text } from 'galio-framework';
 import theme from '../constants/theme';

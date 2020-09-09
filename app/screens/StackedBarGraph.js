@@ -37,7 +37,7 @@ import {
   StackedBarChart,
   XAxis,
   YAxis, LineChart, Grid,
-
+  StackedAreaChart
 } from 'react-native-svg-charts'
 
 import { generateMockConsumptionData } from '../constants/MockData'
@@ -70,7 +70,8 @@ class StackedBarGraph extends Component {
     //   endDate: this.props.endDate,
     //};
     this.state = {
-      exclusionList: new Set()
+      exclusionList: new Set(),
+      isTrue: false
     }
   }
 
@@ -342,63 +343,104 @@ class StackedBarGraph extends Component {
   }
 
 
-  renderYAxisTicks(max, min) {
-    // console.log('max min', max, min);
+  // renderYAxisTicks(max, min) {
+  //   // console.log('max min', max, min);
 
+  //   let yAxisTicks = []
+  //   max = max * 2
+  //   let numberOfTicks = 10
+  //   let temp = min
+  //   let tickOptions = [1, 2, 5]
+  //   let tickMultiplier = 1
+  //   let tickSize = 1
+  //   /*  */
+  //   // console.log('max++++++++++++++++max', max);
+
+  //   while (max / (tickMultiplier * 5) > 20) {
+  //     tickMultiplier = tickMultiplier * 10
+  //   }
+  //   // console.log('111111111111111', tickMultiplier);
+
+  //   if (max / (tickMultiplier * 5) > 10) {
+  //     tickSize = tickMultiplier * 5
+  //   } else if (max / (tickMultiplier * 2) > 10) {
+  //     tickSize = tickMultiplier * 2
+  //   } else {
+  //     tickSize = tickMultiplier / 5
+  //   }
+  //   // tickSize = 500
+  //   let positiveMin = min
+  //   let max1 = 0
+  //   if (min < 0) {
+  //     // console.log('--------------22222222-------');
+
+  //     positiveMin = - min
+  //     max1 = max + (positiveMin)
+  //     // console.log('000000000000', positiveMin);
+  //     // console.log('max..........', max1);
+
+  //   } else {
+  //     max1 = max
+  //   }
+  //   while (temp < max) {
+  //     percentage = (max1 / 10) / max * 100
+  //     stringPercentage = percentage.toString() + "%"
+  //     // console.log('stringPercentage', stringPercentage);
+
+  //     yAxisTicks.push(
+  //       <View style={{ height: '13%', flexDirection: "column-reverse" }}>
+  //         <View style={{ backgroundColor: "gray", height: 1 }}>
+  //         </View>
+  //         <Text style={{ fontSize: 10, color: "#000" }}>
+  //           {temp.toFixed(2)}
+  //         </Text>
+  //       </View>
+  //     );
+
+  //     temp = temp + (max1 / 10);
+  //     console.log('+++++++++++temp+++++++++++++', temp);
+
+  //   }
+  //   return yAxisTicks
+  // }
+  renderYAxisTicks(max) {
     let yAxisTicks = []
-    max = max * 2
-    let numberOfTicks = 10
-    let temp = min
+    max = Math.ceil(max);
+    let numberOfTicks = 11
+    let temp = 0
     let tickOptions = [1, 2, 5]
     let tickMultiplier = 1
     let tickSize = 1
-    /*  */
-    // console.log('max++++++++++++++++max', max);
+    // while (max / (tickMultiplier * 5) > 20) {
+      // tickMultiplier = tickMultiplier * 10
+    // }
+    // if (max / (tickMultiplier * 5) > 10) {
+      tickSize = max / 10
+    // } else if (max / (tickMultiplier * 2) > 10) {
+      // tickSize = tickMultiplier * 2
+    // } else {
+      // tickSize = tickMultiplier / 10
+    // }
 
-    while (max / (tickMultiplier * 5) > 20) {
-      tickMultiplier = tickMultiplier * 10
-    }
-    // console.log('111111111111111', tickMultiplier);
+    // console.log(tickSize)
 
-    if (max / (tickMultiplier * 5) > 10) {
-      tickSize = tickMultiplier * 5
-    } else if (max / (tickMultiplier * 2) > 10) {
-      tickSize = tickMultiplier * 2
-    } else {
-      tickSize = tickMultiplier / 5
-    }
-    // tickSize = 500
-    let positiveMin = min
-    let max1 = 0
-    if (min < 0) {
-      // console.log('--------------22222222-------');
-
-      positiveMin = - min
-      max1 = max + (positiveMin)
-      // console.log('000000000000', positiveMin);
-      // console.log('max..........', max1);
-
-    } else {
-      max1 = max
-    }
     while (temp < max) {
-      percentage = (max1 / 10) / max * 100
+      percentage = tickSize / max * 100
       stringPercentage = percentage.toString() + "%"
-      // console.log('stringPercentage', stringPercentage);
+      // console.log(stringPercentage)
 
       yAxisTicks.push(
         <View style={{ height: stringPercentage, flexDirection: "column-reverse" }}>
           <View style={{ backgroundColor: "gray", height: 1 }}>
+
           </View>
-          <Text style={{ fontSize: 10, color: "#000" }}>
+          <Text style={{ fontSize: 10, color: "gray" }}>
             {temp.toFixed(2)}
           </Text>
         </View>
       );
-
-      temp = temp + (max1 / 10);
-      // console.log('+++++++++++temp+++++++++++++', temp);
-
+      temp = temp + tickSize;
+      // console.log('temp-------', temp);
     }
     return yAxisTicks
   }
@@ -420,6 +462,41 @@ class StackedBarGraph extends Component {
 
 
   render() {
+    const data = [
+      {
+        month: new Date(2015, 0, 1),
+        apples: 3840,
+        bananas: 1920,
+        cherries: 960,
+        dates: 400,
+      },
+      {
+        month: new Date(2015, 1, 1),
+        apples: 1600,
+        bananas: 1440,
+        cherries: 960,
+        dates: 400,
+      },
+      {
+        month: new Date(2015, 2, 1),
+        apples: 640,
+        bananas: 960,
+        cherries: 3640,
+        dates: 400,
+      },
+      {
+        month: new Date(2015, 3, 1),
+        apples: 3320,
+        bananas: 480,
+        cherries: 640,
+        dates: 400,
+      },
+    ]
+
+    const colors = ['rgb(138, 0, 230, 0.8)', 'rgb(173, 51, 255, 0.8)', 'rgb(194, 102, 255, 0.8)', 'rgb(214, 153, 255, 0.8)']
+    const keys = ['apples', 'bananas', 'cherries', 'dates']
+
+
     const options = [
       { text: DURATIONS.DURATION_15_MINUTES },
       { text: DURATIONS.DURATION_1_HOUR },
@@ -440,13 +517,13 @@ class StackedBarGraph extends Component {
     //max = 1000
     deviceIds = [1, 2, 3]
     mockBarGraphDataObject = this.createDataInputObjects(this.props.usageData, this.props.devices.data)
-
+    console.log('mockBarGraphDataObject', mockBarGraphDataObject);
     // prettyPrint(mockBarGraphDataObject)
 
     return (
       <View style={{ flex: 1 }}>
         {/* <View style={{ backgroundColor: "white", width: "100%", height: "22%", shadowRadius: 5, elevation: 10, shadowColor: 'black', shadowOpacity: 1.0 }}> */}
-        <View style={{ backgroundColor: "white", width: "100%", zIndex: 9999 }}>
+        <View style={{ width: "100%" }}>
           <Title title="Usage Stats" />
           <View style={{ flexDirection: "row", width: "100%" }} >
             <View style={{ flexDirection: "column", width: "55%" }} >
@@ -501,34 +578,38 @@ class StackedBarGraph extends Component {
 
         </View>
 
-        <View style={{ width: "94%", height: "68%", marginLeft: 12, marginRight: 12, flexDirection: 'row' }}>
-
-          {/* <View
-            style={{ width: "25%", marginRight: 10, marginLeft: 10, borderColor: "", position: "absolute", top: "1%", left: "64%", zIndex: 1 }}
-          >
-
-          </View> */}
+        <View style={{ width: "94%", height: "77%", marginLeft: 12, marginRight: 12, flexDirection: 'row' }}>
+          {/* <YAxis
+            style={{ width: 30 }}
+            data={StackedAreaChart.extractDataPoints(mockBarGraphDataObject.data, mockBarGraphDataObject.keys)}
+            contentInset={{ top: 10, bottom: 10 }}
+            svg={{
+              fontSize: 12,
+              fill: 'black',
+              stroke: 'black',
+              strokeWidth: 0.1,
+              alignmentBaseline: 'baseline',
+              baselineShift: '3',
+            }}
+          /> */}
           <View
-            style={{ width: 30, justifyContent: 'flex-start', height: ComponentUtil.makePercentage(82), marginTop: 22, flexDirection: 'column-reverse' }}>
+            style={{ width: 30, justifyContent: 'flex-start', height: ComponentUtil.makePercentage(constants.yAxisPercentage), marginTop: 22, flexDirection: 'column-reverse' }}>
             {this.renderYAxisTicks(mockBarGraphDataObject.max, mockBarGraphDataObject.min)}
           </View>
-          <View style={{ backgroundColor: "gray", width: 1, height: ComponentUtil.makePercentage(73), marginTop: 23 }}>
-
-          </View>
+          {/* <View
+            style={{ width: 30, justifyContent: 'flex-start', height: ComponentUtil.makePercentage(92.8), marginTop: 22, flexDirection: 'column-reverse' }}>
+            {this.renderYAxisTicks(mockBarGraphDataObject.max, mockBarGraphDataObject.min)}
+          </View> */}
+          <View style={{ backgroundColor: "gray", width: 1, height: ComponentUtil.makePercentage(constants.yAxisPercentage), marginTop: 22 }} />
           {mockBarGraphDataObject && mockBarGraphDataObject.data && mockBarGraphDataObject.data.length > 0 ?
-            <ScrollView
-              horizontal={true}
-            >
+            <ScrollView horizontal={true}>
               <View
                 style={{ width: (mockBarGraphDataObject.data.length * constants.barWidth), height: "100%", flexDirection: 'column-reverse' }}
                 horizontal={false}
               >
-
                 <View style={{ flexDirection: "row", width: (mockBarGraphDataObject.data.length * constants.barWidth) }}>
                   {this.renderBarLabels(mockBarGraphDataObject.fullBarInfo)}
                 </View>
-                {/* <View style={{ flexDirection: "row", backgroundColor: "gray", height: 1, width: (mockBarGraphDataObject.data.length * constants.barWidth) }}>
-              </View> */}
                 <StackedBarChart
                   style={{ height: ComponentUtil.makePercentage(92), width: "100%", }}
                   keys={mockBarGraphDataObject.keys}
@@ -584,3 +665,4 @@ const constants = {
   yAxisPercentage: 93,
   barWidth: 50,
 };
+

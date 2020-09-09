@@ -29,7 +29,7 @@
     "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",
     "react-native": "0.61.5",
-    "react-native-chart-kit": "^5.6.1",
+    "react-native-chart-kit": "^6.6.1",
     "react-native-fbsdk": "^1.1.2",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-modal-datetime-picker": "^8.5.2",
