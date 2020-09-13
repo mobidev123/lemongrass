@@ -59,22 +59,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-smartbrush-tvOS.xcscheme</key>
+		<key>Pods-LemonGrass-tvOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-smartbrush-tvOSTests.xcscheme</key>
+		<key>Pods-LemonGrass-tvOSTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-smartbrush.xcscheme</key>
+		<key>Pods-LemonGrass.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-smartbrushTests.xcscheme</key>
+		<key>Pods-LemonGrassTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

@@ -18,6 +18,7 @@ import {
   TouchableOpacityBase,
   TouchableOpacity,
   Dimensions,
+  Linking
 } from 'react-native';
 import Title from '../components/Title';
 import { connect } from 'react-redux';
@@ -39,13 +40,12 @@ import {
   YAxis, LineChart, Grid,
   StackedAreaChart
 } from 'react-native-svg-charts'
-
 import { generateMockConsumptionData } from '../constants/MockData'
 
 import { DURATIONS, BAR_GRAPH_COLORS } from '../constants/theme'
 
 import DateRangePicker from 'react-dates'
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as ComponentUtil from './../util/ComponentUtil'
 
 import { prettyPrint } from '../util/GeneralUtil'
@@ -71,7 +71,8 @@ class StackedBarGraph extends Component {
     //};
     this.state = {
       exclusionList: new Set(),
-      isTrue: false
+      isTrue: false,
+      openBox: false,
     }
   }
 
@@ -91,6 +92,10 @@ class StackedBarGraph extends Component {
   }
 
   setSelectedOption(selectedOption) {
+    this.setState({ openBox: false })
+    let text = {}
+    text = `${selectedOption.toString()}`
+    selectedOption = { text }
     let newState = { ...this.props }
     newState["selectedOption"] = selectedOption
     if (newState.selectedOption != null) {
@@ -412,14 +417,14 @@ class StackedBarGraph extends Component {
     let tickMultiplier = 1
     let tickSize = 1
     // while (max / (tickMultiplier * 5) > 20) {
-      // tickMultiplier = tickMultiplier * 10
+    // tickMultiplier = tickMultiplier * 10
     // }
     // if (max / (tickMultiplier * 5) > 10) {
-      tickSize = max / 10
+    tickSize = max / 10
     // } else if (max / (tickMultiplier * 2) > 10) {
-      // tickSize = tickMultiplier * 2
+    // tickSize = tickMultiplier * 2
     // } else {
-      // tickSize = tickMultiplier / 10
+    // tickSize = tickMultiplier / 10
     // }
 
     // console.log(tickSize)
@@ -516,14 +521,12 @@ class StackedBarGraph extends Component {
     duration = DURATIONS.DURATION_1_HOUR;
     //max = 1000
     deviceIds = [1, 2, 3]
-    mockBarGraphDataObject = this.createDataInputObjects(this.props.usageData, this.props.devices.data)
-    console.log('mockBarGraphDataObject', mockBarGraphDataObject);
+    mockBarGraphDataObject = this.createDataInputObjects(this.props.usageData && this.props.usageData, this.props.devices.data && this.props.devices.data)
     // prettyPrint(mockBarGraphDataObject)
-
     return (
       <View style={{ flex: 1 }}>
         {/* <View style={{ backgroundColor: "white", width: "100%", height: "22%", shadowRadius: 5, elevation: 10, shadowColor: 'black', shadowOpacity: 1.0 }}> */}
-        <View style={{ width: "100%" }}>
+        <View style={{ width: "100%", zIndex: 9999 }}>
           <Title title="Usage Stats" />
           <View style={{ flexDirection: "row", width: "100%" }} >
             <View style={{ flexDirection: "column", width: "55%" }} >
@@ -553,7 +556,7 @@ class StackedBarGraph extends Component {
                   </Text>
                 </Button>
               </View>
-              <View style={{ width: "90%", margin: 5 }}>
+              {/* <View style={{ width: "90%", margin: 5 }}>
                 <Select
                   data={options}
                   selectedOption={{ text: this.props.duration }}
@@ -564,6 +567,27 @@ class StackedBarGraph extends Component {
                         </Text>
                   }
                 />
+              </View> */}
+              <View style={{ margin: 10, zIndex: 9999 }}>
+                <TouchableOpacity
+                  onPress={() => this.setState({ openBox: !this.state.openBox })}
+                  style={{ flexDirection: 'row', borderWidth: 1, paddingHorizontal: 8, paddingVertical: 5, borderColor: '#ddd' }}>
+                  <Text style={{ flex: 1, fontSize: 16 }}>{this.props.duration}</Text>
+                  <MaterialCommunityIcons name={this.state.openBox ? 'chevron-up' : 'chevron-down'} size={20} color={'#aaa'} />
+                </TouchableOpacity>
+                {this.state.openBox &&
+                  <View style={{ position: 'absolute', width: '100%', top: 35, borderWidth: 1, borderColor: '#ddd' }}>
+                    {options.map((d) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => this.setSelectedOption(d.text)}
+                          style={{ height: 40, backgroundColor: '#fff', justifyContent: 'center', paddingHorizontal: 10 }}>
+                          <Text style={{ fontSize: 16 }}>{d.text}</Text>
+                        </TouchableOpacity>
+                      )
+                    })}
+                  </View>
+                }
               </View>
             </View>
             <View style={{ width: "45%" }}>
@@ -621,7 +645,13 @@ class StackedBarGraph extends Component {
             </ScrollView>
             :
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ fontSize: 20, color: 'gray' }}>No consumption data found</Text>
+              <Text style={{ fontSize: 20, color: 'gray', paddingLeft: 10, textAlign:'center' }}>You can upload your electricity bill using this URL:</Text>
+              <TouchableOpacity
+            style={{ height: 40, justifyContent: 'center' }}
+            onPress={() => Linking.openURL(`http://34.227.18.102:3000/csv?user_id=${user.id}`)}>
+            <Text style={{ fontSize: 20, color: 'gray' }}>
+              {'Upload csv file'}</Text>
+          </TouchableOpacity>{/*  */}
             </View>
           }
         </View>

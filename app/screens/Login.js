@@ -6,13 +6,13 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {signUp, googleSignIn, facebookSignIn} from '../actions/auth-actions';
-import {Block, Button, Input, Text, Icon} from 'galio-framework';
+import { connect } from 'react-redux';
+import { signUp, googleSignIn, facebookSignIn, AsyncStorage } from '../actions/auth-actions';
+import { Block, Button, Input, Text, Icon } from 'galio-framework';
 import theme from '../constants/theme';
 import Title from '../components/Title';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const SOCIAL_ICON_SIZE = theme.SIZES.BASE * 1.5;
 const SOCIAL_BTN_SIZE = theme.SIZES.BASE * 3;
@@ -23,33 +23,35 @@ class Login extends React.Component {
   };
 
   handleChange = (key, value) => {
-    var user = {...this.state.user};
+    var user = { ...this.state.user };
     user[key] = value;
-    this.setState({user});
+    this.setState({ user });
   };
 
   render() {
+    console.log('googleSignIn-------', this.props.user);
+
     return (
       <Block safe flex style={styles.container}>
         <ScrollView style={styles.flex} keyboardShouldPersistTaps="handled">
           <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={5}>
             <Title title="Login" />
             <Block flex middle>
-              <Form handleChange={this.handleChange} />
-              <Block flex center style={{marginBottom: 20}}>
-                <Button
+              {/* <Form handleChange={this.handleChange} /> */}
+              <Block flex center style={{ marginBottom: 20 }}>
+                {/* <Button
                   style={styles.button}
                   round
                   color={theme.COLORS.PRIMARY}
                   shadowColor={theme.COLORS.PRIMARY}
                   onPress={() => this.props.signUp(this.state.user)}>
                   Sign up
-                </Button>
+                </Button> */}
                 <Button
                   round
                   color={theme.COLORS.TRANSPARENT}
                   shadowColor={theme.COLORS.MUTED}
-                  style={[styles.button, {borderColor: theme.COLORS.MUTED}]}
+                  style={[styles.button, { borderColor: theme.COLORS.MUTED }]}
                   onPress={() => this.props.googleSignIn()}>
                   <Icon
                     size={SOCIAL_ICON_SIZE}
@@ -58,7 +60,7 @@ class Login extends React.Component {
                     color={theme.COLORS.MUTED}
                   />
                 </Button>
-                <Button
+                {/* <Button
                   round
                   color={theme.COLORS.FACEBOOK}
                   shadowColor={theme.COLORS.FACEBOOK}
@@ -70,7 +72,7 @@ class Login extends React.Component {
                     family="font-awesome"
                     color={theme.COLORS.WHITE}
                   />
-                </Button>
+                </Button> */}
               </Block>
             </Block>
           </KeyboardAvoidingView>
@@ -80,8 +82,8 @@ class Login extends React.Component {
   }
 }
 
-const Form = ({handleChange}) => (
-  <Block style={{marginBottom: 20}}>
+const Form = ({ handleChange }) => (
+  <Block style={{ marginBottom: 20 }}>
     <Input
       borderless
       placeholder="Name"

@@ -22,6 +22,7 @@ import Home from './screens/Home';
 import Profile from './screens/Profile';
 import StackedBarGraph from './screens/StackedBarGraph'
 import Devices from './screens/Devices'
+import UploadBill from './screens/UploadBill'
 import DeviceDetails from './screens/DeviceDetails';
 import DeviceList from './screens/DeviceList'
 import DeviceListDetails from './screens/DeviceListDetails'
@@ -54,13 +55,23 @@ function App() {
             ),
           }}
         /> */}
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Profile"
           component={Profile}
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({ color, size }) => (
               <FontAwesome name="user" color={color} size={size} />
+            ),
+          }}
+        /> */}
+        <Tab.Screen
+          name="UploadBill"
+          component={UploadBill}
+          options={{
+            tabBarLabel: 'upload your bill',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="fridge" color={color} size={size} />
             ),
           }}
         />
@@ -78,7 +89,7 @@ function App() {
           name="Devices"
           component={Devices}
           options={{
-            tabBarLabel: 'fridge',
+            tabBarLabel: 'Devices',
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="fridge" color={color} size={size} />
             ),
@@ -125,12 +136,12 @@ class SmartBrush extends Component {
                 animationTypeForReplace: 'pop',
               }} />
             )}
-            <Auth.Screen name="DeviceListDetails" component={DeviceListDetails} 
-                 options={({ route, navigation }) => ({
-                  headerBackTitle: ''
-                  // headerShown: false,
-              })}
-            />
+          <Auth.Screen name="DeviceListDetails" component={DeviceListDetails}
+            options={({ route, navigation }) => ({
+              headerBackTitle: ''
+              // headerShown: false,
+            })}
+          />
         </Auth.Navigator>
       </NavigationContainer>
     );
